@@ -1,0 +1,35 @@
+service:  serverless-slack-bot
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: dev
+  region: us-east-1
+  stackTags: # CF stack tags
+    name: ${self:service}-cft
+    purpose:  CloudFormation Template for Serverless Slack Bot
+    businessunit: AppDev
+    createdby: ${file(config.${self:provider.stage}.json):CREATOR_EMAIL}
+    owner: ${file(config.${self:provider.stage}.json):CREATOR_EMAIL}
+  tags: # Tags that will be added to each of the deployment resources
+    name: ${self:service}-lambda
+    purpose: Serverless Slack Bot Lambda
+    businessunit: AppDev
+    createdby: ${file(config.${self:provider.stage}.json):CREATOR_EMAIL}
+    owner: ${file(config.${self:provider.stage}.json):CREATOR_EMAIL}
+    
+package:
+  exclude:
+    - .git/**
+    - venv/**
+
+functions:
+  serverless-slack-bot:
+    handler: serverless-slack-bot.handler
+    name: serverless-slack-bot
+    timeout: 30
+    events:
+      - http:
+          integration: lambda
+          path: bot
+          method: post

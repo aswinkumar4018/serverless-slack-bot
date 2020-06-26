@@ -34,4 +34,4 @@ functions:
           path: bot
           method: post
     environment:
-      BOT_TOKEN: ${file(../config.${self:provider.stage}.json):BOT_TOKEN}
+      BOT_TOKEN: ${file(config.${self:provider.stage}.json):BOT_TOKEN}

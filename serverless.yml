@@ -33,3 +33,5 @@ functions:
           integration: lambda
           path: bot
           method: post
+    environment:
+      BOT_TOKEN: ${file(../config.${self:provider.stage}.json):BOT_TOKEN}

@@ -17,11 +17,13 @@ SLACK_URL = "https://slack.com/api/chat.postMessage"
 def handler(event, context):
     logger.info("Request Event: {}".format(event))
     try:
+        # Default empty response
         response = dict()
         if 'body' in event:
             request_body_json = event['body']
             logger.info('Received API Gateway Request with Body: {}'.format(request_body_json))
             if 'challenge' in request_body_json:
+                # For verification by Slack
                 challenge = request_body_json["challenge"]
                 logger.info('Challenge: {}'.format(challenge))
                 challenge_response = dict()
